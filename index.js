@@ -25,6 +25,14 @@ const client = new MongoClient(process.env.MONGO_URI, { useNewUrlParser: true, u
 
 async function run() {
     const taskCollections = client.db('task-manager').collection('tasks');
+
+    //insert task data
+    app.post('/tasks', async (req, res) => {
+        const task = req.body;
+        const result = await taskCollections.insertOne(task);
+        res.send(result);
+    });
+
 }
 
 run().catch(err => console.log(err));
